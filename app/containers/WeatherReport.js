@@ -7,6 +7,8 @@ var List = require("../components/list.js");
 
 var addCity = require("../actions/addCity.js");
 var loadLocalData = require("../actions/loadLocalData.js");
+var checkLocation = require("../actions/checkLocation.js");
+var smthHappened = require("../actions/smthHappened.js");
 
 class WeatherReport extends React.Component {
   constructor(props){
@@ -15,8 +17,12 @@ class WeatherReport extends React.Component {
 
   loadLocalData () {
     this.props.loadLocalData({
-      storeString: 'Just empty string yet'
+      storeString: localStorage.getItem('localData')
     });
+  }
+
+  checkLocation () {
+    this.props.checkLocation(); 
   }
 
   addCity (e) {
@@ -25,14 +31,26 @@ class WeatherReport extends React.Component {
     });
   }
 
+  smthHappened() {
+    this.props.smthHappened({
+      weatherData: 'Something happened!'
+    });
+  }
+
   render() {
     this.loadLocalData();
+    if ( !this.props.isPositionRenewed ) {
+      this.checkLocation();
+    }
 
     return(
-      <div className='application'> 
+      <div> 
           <Input 
             addCity={this.addCity.bind(this)}/>
           <List/>
+          <button onClick={this.smthHappened.bind(this)}>
+            BIG BEATIFUL BUTTON
+          </button>
       </div>
     );
   }
@@ -40,13 +58,16 @@ class WeatherReport extends React.Component {
 
 function mapStateToProps (state) {
   return {
+    isPositionRenewed: state.isPositionRenewed
   };
 } 
 
 function mapDispatchToProps(dispatch) {
   	return bindActionCreators({ 
       loadLocalData,
-      addCity
+      addCity,
+      checkLocation,
+      smthHappened
     }, dispatch);
 }
 

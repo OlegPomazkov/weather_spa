@@ -7,7 +7,7 @@ class List extends React.Component {
 
   render() {
     return(
-      <div className='list__container'>
+      <div>
         JUST LIST CONTAINER
       </div>  
     );

@@ -1,4 +1,12 @@
 var React = require('react');
+var styled = require('styled-components').default;
+
+
+const StyledInput = styled.input`
+  font-size: 20px;
+  color: #999;
+  font-weight: bold;
+`;
 
 class Input extends React.Component {
   constructor(props){
@@ -9,10 +17,9 @@ class Input extends React.Component {
     this.props.addCity();
 
     return(
-      <div className='input__container'>
-        <p className='input__header'>New City</p>
-        <input
-          className = 'input__input' 
+      <div>
+        <p>New City</p>
+        <StyledInput
           type='text' 
           placeholder='Type city name'/>
       </div>  

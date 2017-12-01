@@ -1,7 +1,7 @@
 var path = require('path');
  
 module.exports = {
-    entry: ['./app/app'],                                 
+    entry: ['babel-polyfill', './app/app'],                                 
     output:{
         path: path.resolve(__dirname, './public'),     
         publicPath: '/public/',

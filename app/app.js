@@ -2,10 +2,18 @@ var ReactDOM = require('react-dom');
 var React = require('react');
 var redux = require('redux');
 var Provider = require('react-redux').Provider;
-var configureStore = require('./store/configureStore');
+var sagaMiddleware = require('./store/configureStore').sagaMiddleware;
+var configureStore = require('./store/configureStore').store;
+
 var WeatherReport = require('./containers/WeatherReport.js');
+
+var checkLocationSaga = require("./sagas/checkLocationSaga.js").checkLocationSaga;
+var myFirstSaga = require("./sagas/mySagas.js").myFirstSaga;
    
 const store = configureStore();
+
+sagaMiddleware.run(checkLocationSaga);
+sagaMiddleware.run(myFirstSaga);
 
 ReactDOM.render(
   <Provider store={store}>
