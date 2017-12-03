@@ -1,25 +1,20 @@
 const initialState = {
   isPositionRenewed: false,
-  currentPosition: {},
-  previousWhether: {},
+  myPosition: '',
+  myWheather: '',
+  allWeather: ''
 }; 
 
 function mainReducer(state = initialState, action) {
   let currentPosition;
 
   switch (action.type) {
-    case 'LOAD_LOCAL_DATA':  
-      if (!action.payload.storeString) return Object.assign({}, state);
 
-      let dataObject = JSON.parse(action.payload.storeString);
-
-      currentPosition = {
-        lon: dataObject.currentPosition.lon,
-        lat: dataObject.currentPosition.lat
-      }
-
+    case 'LOAD_LOCAL_DATA':
       return Object.assign({}, state, {
-        currentPosition: currentPosition
+        myPosition: action.payload.myPosition,
+        myWheather: action.payload.myWheather,
+        allWeather: action.payload.allWeather
       });
 
     case 'ADD_CITY':
@@ -36,13 +31,14 @@ function mainReducer(state = initialState, action) {
 
       return Object.assign({}, state, {
         isPositionRenewed: true,
-        currentPosition: currentPosition
+        myPosition: currentPosition
       });
 
     case 'LOCATION_WEATHER_SUCCESS':
-      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload.text());
+      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload);
 
       return Object.assign({}, state, {
+        myWeather: action.payload
       });
 
     case 'LOCATION_CHECKED_ERROR':

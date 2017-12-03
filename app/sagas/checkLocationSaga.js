@@ -2,41 +2,16 @@ var call = require('redux-saga/effects').call;
 var put = require('redux-saga/effects').put;
 var takeEvery = require('redux-saga/effects').takeEvery;
 
-// const transferPosition = (pos) => {
-//   console.log(' Current position is -----> ', pos )
-
-//   return pos;  
-// }
-
-var getPosition = function (options) {
-  return new Promise(function (resolve, reject) {
-    navigator.geolocation.getCurrentPosition(resolve, reject, options);
-  });
-}
-
-// let promise = fetch(url[, options]);
-// http://api.openweathermap.org/data/2.5/weather?q=London,uk&APPID=6ce71fb06f22461d1c7cb767e557edf6
-// api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}
-
-var getPositionWeather = function (position) {
-  let lon = position.coords.longitude;
-  let lat = position.coords.latitude;
-  let key = '6ce71fb06f22461d1c7cb767e557edf6';
-
-  let url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&APPID=' + key;
-
-
-  return fetch(url);
-}
-
+var getPosition = require('../api/api.js').getPosition;
+var getPositionWeather = require('../api/api.js').getPositionWeather;
 
 function* onCheckLocation(action) {
   try {
     const position = yield call(getPosition, action.payload);
     yield put({type: "LOCATION_CHECKED_SUCCESS", payload: position});
 
-    console.log(position);
-    // debugger; 
+    console.log(position); // !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+
      const positionWeather = yield call(getPositionWeather, position);
      yield put({type: "LOCATION_WEATHER_SUCCESS", payload: positionWeather});
   } catch (e) {
