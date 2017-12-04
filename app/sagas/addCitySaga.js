@@ -8,7 +8,7 @@ function* onAddCity(action) {
   try {
      const cityWeather = yield call(getByNameWeather, action.payload.cityName);
      
-     yield put({type: "ADD_CITY_SUCCESS", payload: cityWeather});
+     yield put({type: "ADD_CITY_SUCCESS", payload: {weather:cityWeather}});
   } catch (e) {
     yield put({type: "ADD_CITY_ERROR", payload: e.message});
   }
@@ -18,5 +18,4 @@ function* addCitySaga() {
   yield takeEvery("ADD_CITY", onAddCity);
 }
 
-module.exports.addCitySaga = addCitySaga
-;
+module.exports.addCitySaga = addCitySaga;

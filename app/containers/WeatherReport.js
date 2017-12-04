@@ -7,10 +7,9 @@ var List = require("../components/list.js");
 var WeatherWidget = require("../components/WeatherWidget.js");
 
 var addCity = require("../actions/addCity.js");
-var addCityRequest = require("../actions/addCityRequest.js");
+var deleteCity = require("../actions/deleteCity.js");
 var loadLocalData = require("../actions/loadLocalData.js");
 var checkLocation = require("../actions/checkLocation.js");
-var smthHappened = require("../actions/smthHappened.js");
 
 class WeatherReport extends React.Component {
   constructor(props){
@@ -25,7 +24,7 @@ class WeatherReport extends React.Component {
     this.props.loadLocalData({
       myPosition: myPosition ? JSON.parse(myPosition) : '',
       myWeather: myWeather ? JSON.parse(myWeather) : '',
-      allWeather: allWeather ? JSON.parse(allWeather) : ''
+      allWeather: allWeather ? JSON.parse(allWeather) : []
     });
   }
 
@@ -35,15 +34,23 @@ class WeatherReport extends React.Component {
 
   addCity (e) {
     if (e.keyCode !== 13) return;
+    if (this.props.allWeather.map(item => 
+      item.name.toUpperCase())
+      .indexOf(e.target.value.toUpperCase()) !== -1 ) {
+      e.target.value = '';
+
+      return;
+    }
 
     this.props.addCity({
       cityName: e.target.value
     });
+    e.target.value = '';
   }
 
-  smthHappened() {
-    this.props.smthHappened({
-      weatherData: 'Something happened!'
+  deleteCity (e) {
+    this.props.deleteCity({
+      cityName: e.target.getAttribute('city')
     });
   }
 
@@ -76,10 +83,9 @@ class WeatherReport extends React.Component {
           {myWeatherTemplate} 
           <Input 
             addCity={this.addCity.bind(this)}/>
-          <List/>
-          <button onClick={this.smthHappened.bind(this)}>
-            BIG BEATIFUL BUTTON
-          </button>
+          <List 
+            allWeather={this.props.allWeather}
+            deleteCity={this.deleteCity.bind(this)}/>
       </div>
     );
   }
@@ -89,7 +95,8 @@ function mapStateToProps (state) {
   return {
     isPositionRenewed: state.isPositionRenewed,
     myPosition: state.myPosition,
-    myWeather: state.myWeather
+    myWeather: state.myWeather,
+    allWeather: state.allWeather
   };
 } 
 
@@ -97,8 +104,8 @@ function mapDispatchToProps(dispatch) {
   	return bindActionCreators({ 
       loadLocalData,
       addCity,
-      checkLocation,
-      smthHappened
+      deleteCity,
+      checkLocation
     }, dispatch);
 }
 
