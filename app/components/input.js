@@ -14,14 +14,14 @@ class Input extends React.Component {
   }
 
   render() {
-    this.props.addCity();
 
     return(
       <div>
         <p>New City</p>
         <StyledInput
           type='text' 
-          placeholder='Type city name'/>
+          placeholder='Enter city name'
+          onKeyDown={this.props.addCity.bind(this)}/>
       </div>  
     );
   }

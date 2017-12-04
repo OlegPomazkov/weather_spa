@@ -7,6 +7,7 @@ var List = require("../components/list.js");
 var WeatherWidget = require("../components/WeatherWidget.js");
 
 var addCity = require("../actions/addCity.js");
+var addCityRequest = require("../actions/addCityRequest.js");
 var loadLocalData = require("../actions/loadLocalData.js");
 var checkLocation = require("../actions/checkLocation.js");
 var smthHappened = require("../actions/smthHappened.js");
@@ -33,8 +34,10 @@ class WeatherReport extends React.Component {
   }
 
   addCity (e) {
+    if (e.keyCode !== 13) return;
+
     this.props.addCity({
-      weatherData: 'Just another empty string'
+      cityName: e.target.value
     });
   }
 
@@ -49,17 +52,28 @@ class WeatherReport extends React.Component {
   }
 
   render() {
+    let myWeatherTemplate;
+
     if ( !this.props.isPositionRenewed ) {
       this.checkLocation();
     }
-
+    if (this.props.myPosition) {
+      myWeatherTemplate =(
+        <div>
+          <h3>Your weather:</h3>
+          <WeatherWidget 
+            weatherData={this.props.myWeather} /> 
+        </div>
+      );
+    } else {
+      myWeatherTemplate =(
+        <h3>Can not get your place ...</h3>
+      );
+    }
     return(
       <div>
           <h1>YourWeatherReporter</h1>
-          <h3>Your weather:</h3>
-          <WeatherWidget 
-            commonData={this.props.myPosition} 
-            weatherData={this.props.myWeather} /> 
+          {myWeatherTemplate} 
           <Input 
             addCity={this.addCity.bind(this)}/>
           <List/>

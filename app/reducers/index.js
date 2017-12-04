@@ -41,7 +41,14 @@ function mainReducer(state = initialState, action) {
         myWeather: action.payload
       });
 
+    case 'ADD_CITY_SUCCESS':
+      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload);
+
+      return Object.assign({}, state
+      );
+
     case 'LOCATION_CHECKED_ERROR':
+    case 'ADD_CITY_ERROR':
       console.log('From LOCATION_CHECKED_ERROR ----> ', action.payload);
 
       return Object.assign({}, state, {
