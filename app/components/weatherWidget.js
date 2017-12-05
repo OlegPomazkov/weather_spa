@@ -1,22 +1,30 @@
 var React = require('react');
 var styled = require('styled-components').default;
 
+const WWrapper = styled.div`
+  display: inline-block;
+  margin: 10px;
+  background: ${props => props.another ? '#fff1f1' : '#f1f1f1'};
+`;
 const WBox = styled.div`
   position: relative;
   width: 300px;
   font-family: Helvetica, sans-serif;
-  border-radius: 2px;
-  border: 2px solid #999;
+  border-radius: 5px;
+  border: 3px solid #999;
   color: #555;
 `;
 const BHeader = styled.div`
-  background: ${props => props.another ? 'palevioletred' : 'white'};
+  height: 55px;
+  text-align: left;
   font-size: 17px;
   padding-left: 7px;
   }
 `;
 const City = styled.p`
   display: inline-block;
+  margin: 0;
+  margin-top: 10px;
   font-size: 20px;
   font-weight: bold;
   padding-right: 10px;
@@ -24,23 +32,31 @@ const City = styled.p`
 `;
 const Time = styled.p`
   display: inline-block;
+  margin: 0;
+  margin-top: 10px;
   padding-right: 10px;
   }
 `;
 const Empty = styled.p`
   display: inline-block;
+  margin: 0;
   width: 1px;
   height: 1px;
   }
 `;
 const Sbutton = styled.button`
   float: right;
-  font-size: 20px;
-  font-weight: bold;
+  margin-right: 5px;
+  margin-top: 5px;
+  font-size: 23px;
+
+  &:hover {
+    background: #bbb;
+  }
   }
 `;
 const BContent = styled.div`
-  height: 80px;
+  height: 70px;
   margin: 0;
   color: #111;
 `;
@@ -65,6 +81,7 @@ const Temp = styled.p`
 `;
 const BFooter = styled.div`
   font-size: 14px;
+  pading-top: 5px;
 `;
 const Param = styled.div`
   display: inline-block;
@@ -93,13 +110,14 @@ class WeatherWidget extends React.Component {
     if(weather) {
        infoTemplate = (
         <WBox>
-          <BHeader another={another}>
+          <BHeader>
             <City>{weather.name}</City>
             <Time>{helpers.getTime(weather.dt)}</Time>
             { this.props.deleteCity ?
               <Sbutton 
                 data-city={weather.name}
-                onClick={this.props.deleteCity.bind(this)}>
+                onClick={this.props.deleteCity.bind(this)}
+                title="Delete city">
                 &times;
               </Sbutton>:
               <Empty/>
@@ -123,7 +141,7 @@ class WeatherWidget extends React.Component {
               <ParamVal>{helpers.getWind(weather.wind)}</ParamVal>
             </Param>
             <Param> 
-              <ParamHeader>Humiditi</ParamHeader>
+              <ParamHeader>Humidity</ParamHeader>
               <ParamVal>{helpers.getHumidity(weather.main.humidity)}</ParamVal>
             </Param>            
           </BFooter>            
@@ -138,9 +156,9 @@ class WeatherWidget extends React.Component {
     }
 
     return(
-      <div>
+      <WWrapper another={another}>
         {infoTemplate}
-      </div>  
+      </WWrapper>  
     );
   }
 }

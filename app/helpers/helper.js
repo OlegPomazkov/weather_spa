@@ -20,7 +20,7 @@ var helper  = {
   getHumidity: (h) => h + '%',
 
   getWind: (w) => {
-    let dir;
+    let dir = '';
 
     if((w.deg > 327.5) || (w.deg <= 22.5)) dir = 'N'; 
     if((w.deg > 22.5) && (w.deg <= 67.5)) dir = 'NE'; 
@@ -31,7 +31,7 @@ var helper  = {
     if((w.deg > 247.5) && (w.deg <= 292.5)) dir = 'W';
     if((w.deg > 292.5) && (w.deg <= 327.5)) dir = 'NW';
 
-    return dir + ' ' + w.speed + 'm/s';
+    return dir + ' ' + Math.round(w.speed) + 'm/s';
   }
 
 };

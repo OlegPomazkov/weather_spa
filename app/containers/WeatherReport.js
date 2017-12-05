@@ -12,6 +12,29 @@ var loadLocalData = require("../actions/loadLocalData.js");
 var checkLocation = require("../actions/checkLocation.js");
 var updateAllWeather = require("../actions/updateAllWeather.js");
 
+var styled = require('styled-components').default;
+
+const StyledApp = styled.div`
+  position: relative;
+  width: 800px;
+  height:100%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+  font-family: Helvetica, sans-serif;
+  color: #555;
+`;
+const StyledHeader = styled.div`
+  display: inline-block;
+  margin-top: 10px;
+  font-size: 40px;
+  color: #999;
+`;
+const StyledSubHeader = styled.div`
+  font-size: 25px;
+  color: #999;
+`;
+
 class WeatherReport extends React.Component {
   constructor(props){
     super(props);
@@ -34,7 +57,6 @@ class WeatherReport extends React.Component {
   }
 
   updateAllWeather () {
-    debugger;
     if( !this.props.allWeather.length ) return;
 
     let ids = this.props.allWeather.map(item => item.id)
@@ -77,7 +99,7 @@ class WeatherReport extends React.Component {
     if (this.props.myPosition) {
       myWeatherTemplate =(
         <div>
-          <h3>Your weather:</h3>
+          <StyledSubHeader>Your weather:</StyledSubHeader>
           <WeatherWidget 
             weatherData={this.props.myWeather} /> 
         </div>
@@ -88,15 +110,15 @@ class WeatherReport extends React.Component {
       );
     }
     return(
-      <div>
-          <h1>CurrentWeatherReporter</h1>
+      <StyledApp>
+          <StyledHeader>CurrentWeatherReporter</StyledHeader>
           {myWeatherTemplate} 
           <Input 
             addCity={this.addCity.bind(this)}/>
           <List 
             allWeather={this.props.allWeather}
             deleteCity={this.deleteCity.bind(this)}/>
-      </div>
+      </StyledApp>
     );
   }
 }
