@@ -9,11 +9,13 @@ var WeatherReport = require('./containers/WeatherReport.js');
 
 var checkLocationSaga = require("./sagas/checkLocationSaga.js").checkLocationSaga;
 var addCitySaga = require("./sagas/addCitySaga.js").addCitySaga;
+var updateCitysSaga = require("./sagas/updateCitysSaga.js").updateCitysSaga;
    
 const store = configureStore();
 
 sagaMiddleware.run(checkLocationSaga);
 sagaMiddleware.run(addCitySaga);
+sagaMiddleware.run(updateCitysSaga);
 
 ReactDOM.render(
   <Provider store={store}>

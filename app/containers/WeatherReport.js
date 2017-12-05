@@ -10,6 +10,7 @@ var addCity = require("../actions/addCity.js");
 var deleteCity = require("../actions/deleteCity.js");
 var loadLocalData = require("../actions/loadLocalData.js");
 var checkLocation = require("../actions/checkLocation.js");
+var updateAllWeather = require("../actions/updateAllWeather.js");
 
 class WeatherReport extends React.Component {
   constructor(props){
@@ -32,6 +33,14 @@ class WeatherReport extends React.Component {
     this.props.checkLocation(); 
   }
 
+  updateAllWeather () {
+    debugger;
+    if( !this.props.allWeather.length ) return;
+
+    let ids = this.props.allWeather.map(item => item.id)
+    this.props.updateAllWeather( ids ); 
+  }
+
   addCity (e) {
     if (e.keyCode !== 13) return;
     if (this.props.allWeather.map(item => 
@@ -50,7 +59,7 @@ class WeatherReport extends React.Component {
 
   deleteCity (e) {
     this.props.deleteCity({
-      cityName: e.target.getAttribute('city')
+      cityName: e.target.getAttribute('data-city')
     });
   }
 
@@ -63,6 +72,7 @@ class WeatherReport extends React.Component {
 
     if ( !this.props.isPositionRenewed ) {
       this.checkLocation();
+      this.updateAllWeather();
     }
     if (this.props.myPosition) {
       myWeatherTemplate =(
@@ -79,7 +89,7 @@ class WeatherReport extends React.Component {
     }
     return(
       <div>
-          <h1>YourWeatherReporter</h1>
+          <h1>CurrentWeatherReporter</h1>
           {myWeatherTemplate} 
           <Input 
             addCity={this.addCity.bind(this)}/>
@@ -104,6 +114,7 @@ function mapDispatchToProps(dispatch) {
   	return bindActionCreators({ 
       loadLocalData,
       addCity,
+      updateAllWeather,
       deleteCity,
       checkLocation
     }, dispatch);

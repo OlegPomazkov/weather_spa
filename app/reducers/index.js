@@ -40,10 +40,20 @@ function mainReducer(state = initialState, action) {
       });
 
     case 'ADD_CITY_SUCCESS':
-      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload.weather);
+      console.log('From ADD_CITY_SUCCESS ----> ', action.payload.weather);
       allWeather = state.allWeather.map(item => item);
 
       allWeather[allWeather.length] = action.payload.weather;
+      localStorage.setItem('allWeather', JSON.stringify(allWeather));
+
+      return Object.assign({}, state, {
+        allWeather: allWeather
+      });
+
+    case 'UPDATE_CITYS_SUCCESS':
+      console.log('From UPDATE_CITYS_SUCCESS ----> ', action.payload.weather);
+      allWeather = action.payload.weather;
+
       localStorage.setItem('allWeather', JSON.stringify(allWeather));
 
       return Object.assign({}, state, {
@@ -66,6 +76,7 @@ function mainReducer(state = initialState, action) {
 
     case 'LOCATION_CHECKED_ERROR':
     case 'ADD_CITY_ERROR':
+    case 'UPDATE_CITYS_ERROR':
       console.log('From LOCATION_CHECKED_ERROR ----> ', action.payload);
 
       return Object.assign({}, state, {
