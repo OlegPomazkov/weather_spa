@@ -14,7 +14,6 @@ function allWeatherReducer(state = initialState, action) {
       });
 
     case 'ADD_CITY_SUCCESS':
-      console.log('From ADD_CITY_SUCCESS ----> ', action.payload.weather);
       allWeather = state.allWeather.map(item => item);
 
       debugger;
@@ -27,7 +26,6 @@ function allWeatherReducer(state = initialState, action) {
       });
 
     case 'UPDATE_CITYS_SUCCESS':
-      console.log('From UPDATE_CITYS_SUCCESS ----> ', action.payload.weather);
       allWeather = action.payload.weather;
 
       localStorage.setItem('allWeather', JSON.stringify(allWeather));
@@ -37,7 +35,6 @@ function allWeatherReducer(state = initialState, action) {
       });
 
     case 'DELETE_CITY':
-      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload);
       allWeather = state.allWeather.map(item => item);
       
       let indexToDelete = allWeather.map( item => item.name).indexOf(action.payload.cityName);

@@ -9,9 +9,8 @@ function myWeatherReducer(state = initialState, action) {
       return Object.assign({}, state, {
         myWheather: action.payload.myWheather
       });
-          
+
    case 'LOCATION_WEATHER_SUCCESS':
-      console.log('From LOCATION_WEATHER_SUCCESS ----> ', action.payload);
       localStorage.setItem('myWeather', JSON.stringify(action.payload));
 
       return Object.assign({}, state, {

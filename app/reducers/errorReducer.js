@@ -3,7 +3,7 @@ function errorReducer(state = {}, action) {
     case 'LOCATION_CHECKED_ERROR':
     case 'ADD_CITY_ERROR':
     case 'UPDATE_CITYS_ERROR':
-      console.log('From LOCATION_CHECKED_ERROR ----> ', action.payload);
+      console.log('From ERROR_REDUCER ----> ', action.payload);
 
       return Object.assign({}, state);
       
