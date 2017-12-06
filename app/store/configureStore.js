@@ -10,7 +10,7 @@ function configureStore() {
   const store = createStore(
   	mainReducer,
   	applyMiddleware(sagaMiddleware)
-  );              
+  );   
 
   return store;
 }

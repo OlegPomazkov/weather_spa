@@ -8,7 +8,7 @@ function getPosition(options){
 function getPositionWeather(position) {
   let lon = position.coords.longitude;
   let lat = position.coords.latitude;
-  let key = '6ce71fb06f22461d1c7cb767e557edf6';
+  let key = '6228322183a06b8deda72f5acabf9004';
 
   let url = 'http://api.openweathermap.org/data/2.5/weather?lat=' + lat + '&lon=' + lon + '&APPID=' + key;
 
@@ -21,7 +21,7 @@ function getPositionWeather(position) {
 }
 
 function getByNameWeather(name) {
-  let key = '6ce71fb06f22461d1c7cb767e557edf6';
+  let key = '6228322183a06b8deda72f5acabf9004';
   let url = 'http://api.openweathermap.org/data/2.5/weather?q=' + name + '&APPID=' + key;
 
   return fetch(url)
@@ -33,7 +33,7 @@ function getByNameWeather(name) {
 }
 
 function getByIdsWeather(ids) {
-  let key = '6ce71fb06f22461d1c7cb767e557edf6';
+  let key = '6228322183a06b8deda72f5acabf9004';
   let url = 'http://api.openweathermap.org/data/2.5/group?id=' + ids.join(',') + '&APPID=' + key;
 
   return fetch(url)

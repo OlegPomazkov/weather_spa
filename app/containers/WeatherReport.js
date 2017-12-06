@@ -8,7 +8,9 @@ var WeatherWidget = require("../components/WeatherWidget.js");
 
 var addCity = require("../actions/addCity.js");
 var deleteCity = require("../actions/deleteCity.js");
-var loadLocalData = require("../actions/loadLocalData.js");
+var loadLocalMyPositionData = require("../actions/loadLocalMyPositionData.js");
+var loadLocalMyWeatherData = require("../actions/loadLocalMyWeatherData.js");
+var loadLocalAllWeatherData = require("../actions/loadLocalAllWeatherData.js");
 var checkLocation = require("../actions/checkLocation.js");
 var updateAllWeather = require("../actions/updateAllWeather.js");
 
@@ -45,11 +47,16 @@ class WeatherReport extends React.Component {
     let myWeather = localStorage.getItem('myWeather');
     let allWeather = localStorage.getItem('allWeather');
 
-    this.props.loadLocalData({
-      myPosition: myPosition ? JSON.parse(myPosition) : '',
-      myWeather: myWeather ? JSON.parse(myWeather) : '',
+    this.props.loadLocalMyPositionData({
+      myPosition: myPosition ? JSON.parse(myPosition) : ''
+    });
+    this.props.loadLocalMyWeatherData({
+      myWeather: myWeather ? JSON.parse(myWeather) : ''
+    });
+    this.props.loadLocalAllWeatherData({
       allWeather: allWeather ? JSON.parse(allWeather) : []
     });
+
   }
 
   checkLocation () {
@@ -124,17 +131,20 @@ class WeatherReport extends React.Component {
 }
 
 function mapStateToProps (state) {
+
   return {
-    isPositionRenewed: state.isPositionRenewed,
-    myPosition: state.myPosition,
-    myWeather: state.myWeather,
-    allWeather: state.allWeather
+    isPositionRenewed: state.myPositionReducer.isPositionRenewed,
+    myPosition: state.myPositionReducer.myPosition,
+    myWeather: state.myWeatherReducer.myWeather,
+    allWeather: state.allWeatherReducer.allWeather
   };
 } 
 
 function mapDispatchToProps(dispatch) {
   	return bindActionCreators({ 
-      loadLocalData,
+      loadLocalMyPositionData,
+      loadLocalMyWeatherData,
+      loadLocalAllWeatherData,
       addCity,
       updateAllWeather,
       deleteCity,
